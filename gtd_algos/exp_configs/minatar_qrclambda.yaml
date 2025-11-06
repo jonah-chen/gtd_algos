@@ -8,7 +8,8 @@ algo: qrc_lambda
 #### Env related
 env_config:
   domain: gym  
-  env_name: "MinAtar/Breakout-v1"
+  env_name: "MountainCar-v0"
+  #"MinAtar/Breakout-v1"
     #- "MinAtar/Asterix-v1"
     #- "MinAtar/Breakout-v1"
     #- "MinAtar/Freeway-v1"
@@ -37,7 +38,8 @@ agent_config:
   q_lr: 0.0001     # learning rate for Q network
   h_lr_scale: 0.1   # specify a multiple of lr for h
   opt: sgd
-  net_arch: minatar
+  net_arch: mlp
+  mlp_layers: [128, 128]  # hidden layers for MLP net
   activation: leaky_relu
   sparse_init: 0.9
   layer_norm: True

@@ -12,6 +12,7 @@ class StoreEpisodeReturnsAndLengths(gym.Wrapper):
     def step(self, action):
         next_obs, reward, terminated, truncated, info = self.env.step(action)
         if terminated or truncated:
-            self.all_episode_returns.append(info['episode']['r'].item())
-            self.all_episode_lengths.append(info['episode']['l'].item())
+            # info['episode']['r'] / ['l'] may be numpy scalars or Python floats; cast to float for safety
+            self.all_episode_returns.append(float(info['episode']['r']))
+            self.all_episode_lengths.append(int(info['episode']['l']))
         return next_obs, reward, terminated, truncated, info

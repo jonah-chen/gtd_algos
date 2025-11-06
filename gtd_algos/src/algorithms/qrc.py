@@ -7,7 +7,7 @@ import jax
 import jax.numpy as jnp
 import numpy as np
 import optax
-from jax import tree_map
+from jax.tree import map as tree_map
 from gtd_algos.src import tree
 from gtd_algos.src.algorithms.agent import Agent
 from gtd_algos.src.configs.Config import Config
@@ -63,7 +63,7 @@ def init_agent_state(agent_config: Config, action_dim: int, obs_shape: tuple, rn
         )
 
     def params_sum(params):
-        return sum(jax.tree_util.tree_leaves(jax.tree_map(lambda x: np.prod(x.shape), params)))
+        return sum(jax.tree_util.tree_leaves(jax.tree_util.tree_map(lambda x: np.prod(x.shape), params)))
     print(f"Total number of params: {params_sum(train_states[0].params) + params_sum(train_states[1].params)}")
     # q_train_state, h_train_state = train_states
     grad_h_trace = tree_map(jnp.zeros_like,train_states[0].params)

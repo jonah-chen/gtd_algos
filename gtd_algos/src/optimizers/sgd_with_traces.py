@@ -1,7 +1,7 @@
 from functools import partial
 
 import jax
-from jax import tree_map
+from jax.tree_util import tree_map
 import jax.numpy as jnp
 import optax
 

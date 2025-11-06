@@ -1,6 +1,7 @@
 from functools import reduce
 
-from jax import tree_map, vmap
+from jax import vmap
+from jax.tree_util import tree_map
 import jax.numpy as jnp
 
 

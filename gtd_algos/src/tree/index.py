@@ -1,4 +1,4 @@
-from jax import tree_map
+from jax.tree_util import tree_map
 
 
 def all_but_last(arg):

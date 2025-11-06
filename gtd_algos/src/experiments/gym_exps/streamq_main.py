@@ -45,8 +45,15 @@ def experiment(config: ExpConfig, agent: Agent) -> StoreEpisodeReturnsAndLengths
     for t in itertools.count():
         epsilon = epsilon_schedule(t)
         action, is_nongreedy, rng = agent.step(agent_state, obs, action_dim, epsilon, rng)
-        action = action.item()
-        is_nongreedy = is_nongreedy.item()
+        # action and is_nongreedy may be numpy scalars; cast safely
+        try:
+            action = int(action)
+        except Exception:
+            action = int(action.item())
+        try:
+            is_nongreedy = bool(is_nongreedy)
+        except Exception:
+            is_nongreedy = bool(is_nongreedy.item())
 
         next_obs, reward, terminated, truncated, info = env.step(action)
         done = terminated or truncated
@@ -57,7 +64,7 @@ def experiment(config: ExpConfig, agent: Agent) -> StoreEpisodeReturnsAndLengths
 
         if done:
             episodes += 1
-            undisc_return = info['episode']['r'].item()
+            undisc_return = float(info['episode']['r'])
             wandb.log({
                 'episodes': episodes,
                 'env_steps': t,
